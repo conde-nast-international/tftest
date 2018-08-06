@@ -1,0 +1,28 @@
+version: 2
+jobs:
+  publish:
+    docker:
+      - image: quay.io/condenastinternational/cnid-node-base:ee12a026576f82cbbce1f414d0ee0eb4f9935aad
+    working_directory: ~/conde-nast-international/tftest
+    steps:
+    - checkout
+    - setup_remote_docker
+    - run: export PATH="~/conde-nast-international/okta-cli/node_modules/.bin:$PATH"
+    - run:
+       name: Add deploy token to npmrc
+       command: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+    - deploy:
+       name: Push package to npm
+       command: npm publish
+
+
+
+workflows:
+  version: 2
+  deployment_pipeline:
+    jobs:
+      - publish:
+          filters:
+            branches:
+              only:
+                - master
