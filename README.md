@@ -28,8 +28,29 @@ module.exports = [
 ## Creating a (complex) test
 In order to ensure that for example a DNS record is set correctly for `cnid-infrastructure/src/account_453746000463/services/eu-central-1/copilot-redis` we would create a `tests.js` file with the following content:-
 ```
+const hostnameCheck = (obj, args) => {
+  const matches = (obj.name === args.hostname);
+  return matches;
+};
 
+module.exports = [
+  {
+    "name": "aws_route53_record.dns",
+    "create_arg_count": 11,
+    "allow_create": true,
+    "allow_destroy": false,
+    "args": {
+      "hostname": "copilot-redis-staging.eu-central-1.cni.digital"
+    },
+    "tests": {
+      "create": hostnameCheck,
+      "update": hostnameCheck
+    }
+  }
+];
 ```
+
+This will ensure that if the record is created or updated, it will have to have the correct hostname.
 
 ## How test are executed
 
