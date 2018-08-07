@@ -26,21 +26,31 @@ const fileExists = (filename) => {
   return returnValue;
 }
 
-const discoverTestFiles = () => {
+const discoverTestFile = () => {
+  let testFiles = [];
   const cwd = process.cwd();
-  const cwdTest = path.join(cwd, 'tests.json');
-  if (fileExists(cwdTest)) return [cwdTest];
-  else {
-    let testFiles = [];
-    const modulesJsonFileName = path.join(cwd, '.terraform', 'modules', 'modules.json');
-    const modulesJson = JSON.parse(fs.readFileSync(modulesJsonFileName));
-    for(let i = 0; i < modulesJson.Modules.length; i++) {
-      let module = modulesJson.Modules[i];
-      let moduleTestsJsonFileName = path.join(cwd, module.Dir, module.Root, 'tests.js');
-      if (fileExists(moduleTestsJsonFileName)) testFiles.push(moduleTestsJsonFileName);
-    }
-    return testFiles;
+  const cwdTest = path.join(cwd, 'tests.js');
+  if (fileExists(cwdTest)) testFiles.push(cwdTest);
+  return testFiles;
+};
+
+const discoverModules = () => {
+  let modules = {};
+  const cwd = process.cwd();
+  const modulesJsonFileName = path.join(cwd, '.terraform', 'modules', 'modules.json');
+  const modulesJson = JSON.parse(fs.readFileSync(modulesJsonFileName));
+  for(let i = 0; i < modulesJson.Modules.length; i++) {
+    let module = modulesJson.Modules[i];
+    let tmpModule = {
+      name: module.Root,
+      dir: module.Dir,
+      testFile: ''
+    };
+    let moduleTestsJsonFileName = path.join(cwd, module.Dir, module.Root, 'tests.js');
+    if (fileExists(moduleTestsJsonFileName)) tmpModule.testFile = moduleTestsJsonFileName;
+    modules[tmpModule.name] = tmpModule;
   }
+  return modules;
 };
 
 const displayTestResults = (results) => {
@@ -73,13 +83,14 @@ const runTestRunner = async (planFilename, testFilename = null) => {
   }
   let testResults = [];
   if (testFilename === null) {
-    const discoveredTestFiles = discoverTestFiles();
+    const discoveredTestFiles = discoverTestFile();
     if (discoveredTestFiles.length === 0) {
-      console.error('Failed to find any test files.');
+      console.error('Failed to find tests.js file.');
     } else {
+      let modules = discoverModules();
       let testResultsMulti = [];
       for(let i = 0; i < discoveredTestFiles.length; i++) {
-        let tmpTestResults = await tftest(discoveredTestFiles[i], planJson, modulePath);
+        let tmpTestResults = await tftest(discoveredTestFiles[i], planJson, modules);
         testResultsMulti = testResultsMulti.concat(tmpTestResults);
       }
       testResults = testResultsMulti;
