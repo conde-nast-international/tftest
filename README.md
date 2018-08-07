@@ -1,6 +1,6 @@
 # tftest
 
-## Creating a test
+## Creating a (simple) test
 
 For example, a test on `cnid-infrastructure/src/account_453746000463/services/eu-central-1/polaroid-mongo-replica-set` would be created in the following way
 Firstly `cnid-terrraform-modules/mongo-replica-sets/tests.js` is created with the following content:-
@@ -23,6 +23,12 @@ module.exports = [
     "prefix": "mongo"
   }
 ];
+```
+
+## Creating a (complex) test
+In order to ensure that for example a DNS record is set correctly for `cnid-infrastructure/src/account_453746000463/services/eu-central-1/copilot-redis` we would create a `tests.js` file with the following content:-
+```
+
 ```
 
 ## How test are executed
