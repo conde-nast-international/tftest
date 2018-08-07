@@ -2,7 +2,7 @@
 
 ## Creating a test
 
-For example, a test on cnid-infrastructure/scr/account_123/services/eu-central-1/polaroid-mongodb would be created in the following way
+For example, a test on `cnid-infrastructure/src/account_453746000463/services/eu-central-1/polaroid-mongo-replica-set` would be created in the following way
 Firstly `cnid-terrraform-modules/mongo-replica-sets/tests.js` is created with the following content:-
 ```
 module.exports = [
@@ -27,11 +27,11 @@ module.exports = [
 
 ## How test are executed
 
-For example, a test on cnid-infrastructure/src/account_123/services/eu-central-1/polaroid-mongodb would execute in the following manner.
-- terraform init
-- terraform plan -out=/tmp/plan.out
+For example, a test on `cnid-infrastructure/src/account_453746000463/services/eu-central-1/polaroid-mongo-replica-set` would execute in the following manner.
+- `terraform init`
+- `terraform plan -out=/tmp/plan.out`
 - tftest
-- - tftest test /tmp/plan.out
-- - tftest now looks for tests.js in the current working directory to discover modules that are being used, and their "prefix"
-- - tftest will now examine .terraform/modules to detect any modules that contain a `tests.js` file.
+- - `tftest test /tmp/plan.out`
+- - tftest now looks for `tests.js` in the current working directory to discover modules that are being used, and their "prefix"
+- - tftest will now examine `.terraform/modules/modules.json` to detect any modules that contain a `tests.js` file.
 - - tftest executes the tests against the plan file, if any tests fail the return code is non-zero.
