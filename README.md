@@ -4,7 +4,8 @@
 
 For example, a test on cnid-infrastructure/scr/account_123/services/eu-central-1/polaroid-mongodb would be created in the following way
 Firstly `cnid-terrraform-modules/mongo-replica-sets/tests.js` is created with the following content:-
-```module.exports = [
+```
+module.exports = [
   {
     "name": "aws_launch_configuration.mongo",
     "allow_destroy": false,
@@ -15,7 +16,8 @@ Firstly `cnid-terrraform-modules/mongo-replica-sets/tests.js` is created with th
 This will ensure that plans that contain requests to destroy or change the launch config will cause tests to fail.
 We then create a tests.js in the location where this is utilised, eg: `cnid-infrastructure/src/account_453746000463/services/eu-central-1/polaroid-mongo-replica-set/tests.js`
 With the following content:
-```module.exports = [
+```
+module.exports = [
   {
     "module": "mongo-replica-sets",
     "prefix": "mongo"
