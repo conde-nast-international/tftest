@@ -1,16 +1,14 @@
 {
   "name": "@condenast/tftest",
   "version": "1.1.1",
-  "description": "",
-  "main": "index.js",
+  "description": "Terraform test framework",
+  "main": "bin/cli.js",
   "scripts": {
     "test": "jasmine"
   },
   "bin": {
     "tftest": "bin/cli.js"
   },
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "commander": "^2.16.0"
   }
