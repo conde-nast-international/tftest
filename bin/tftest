@@ -1,0 +1,15 @@
+#!/usr/bin/env node
+// expects process.env.TERRAFORM_FOLDER and process.env.PLAN_FILE to be set
+const runner = require('../lib/runner.js');
+
+if (process.env.TERRAFORM_FOLDER === undefined) {
+  console.error('Error: env TERRAFORM_FOLDER not set');
+  process.exit(1);
+};
+
+if (process.env.PLAN_FILE === undefined) {
+  console.error('Error: env PLAN_FILE not set');
+  process.exit(1);
+};
+
+runner(process.env.TERRAFORM_FOLDER, process.env.PLAN_FILE);
