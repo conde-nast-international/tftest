@@ -1,0 +1,95 @@
+# Spike: Terraform Testing
+
+## Aim
+
+To be able to ensure that we don't break environments by testing planned execution of terraform prior to applying.
+
+## Research into Tools
+
+The following tools run against a real environment and then validate on state afterwards.
+- https://github.com/hashicorp/terraform-aws-consul/tree/master/test
+- https://github.com/gruntwork-io/terratest/tree/master/examples/terraform-aws-example
+- https://blog.gruntwork.io/open-sourcing-terratest-a-swiss-army-knife-for-testing-infrastructure-code-5d883336fcd5
+- https://github.com/newcontext-oss/kitchen-terraform
+
+The low level native Terraform Tests would be quite a pain to maintain
+- https://www.terraform.io/docs/extend/testing/unit-testing.html
+
+## Approches looked at
+
+### tfjson
+One approch we looked at was a relativly simple node tool to run the tests, documentation can be found here: https://github.com/conde-nast-international/tftest/blob/master/README.md
+
+### "rspec"
+
+An alternative approch maybe to utilise an existing test framework such as rspec. An example of a test similar to the one implemented in tftest is as follows:-
+```
+require "json"
+
+file = open("plan.json")
+contents = file.read
+obj = JSON.parse(contents)
+
+RSpec.describe "the mongodb launch configuration shouldn't change" do
+  it "the launch configuration shouldn't change" do
+    obj["mongo"].each do |name,childObj|
+      if name.start_with?("aws_launch_configuration.mongo")
+        expect(childObj["destroy"]).to be_falsey
+      end
+    end
+  end
+end
+```
+
+A 2nd example showing DNS hostname checking
+```
+require "json"
+
+file = open("plan.json")
+contents = file.read
+obj = JSON.parse(contents)
+
+RSpec.describe "the r53 record should be correct" do
+  it "it shouldn't be deleted" do
+    obj.each do |name,childObj|
+      if name.start_with?("aws_route53_record.www")
+        expect(childObj["destroy"]).to be_falsey
+      end
+    end
+  end
+  it "the hostname should be correct" do
+    obj.each do |name,childObj|
+      if name.start_with?("aws_route53_record.dns")
+        expect(childObj["name"]).to eq("copilot-redis-staging.eu-central-1.cni.digital")
+      end
+    end
+  end
+end
+
+```
+
+
+## Next steps
+
+Based upon all the current tools only testing after the state has been applied they are ruled out. This leads onto the need to maintain a tool to run tests against plan files.
+
+The process flow to achieve such could be along the following workflow:-
+- Update the docker image used for running terraform CI to include tfjson + X testing tool
+- `terraform init`
+- `terraform plan -out=/tmp/plan.out`
+- `tfjson /tmp/plan.out`
+- Run some form of tests against tfjson
+- If the tests all pass, `terraform apply /tmp/plan.out`
+
+
+### Alternative approch
+
+A "simpler to test" alternative would be to run against a test environment. Run terraform over the whole environment, from blank to fully deployed. This would have a limitation of not being able to test the minor changes step by step as the whole terraform plan is run.
+
+### Requrired Features
+
+How do you make changes to a resource when the tests expect it to never be destroyed?
+- 1pr, changes tests - set to allowed to be destroyed, code is updated
+- 2pr, changes tests - back to ensuring not destroyed
+
+(An approch considered here is to have a change window defined in the tests, to allow a from and to timestamp which the tests is allowed to fail.)
