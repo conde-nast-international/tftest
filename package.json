@@ -1,8 +1,8 @@
 {
   "name": "@condenast/tftest",
   "version": "1.1.1",
-  "description": "",
-  "main": "index.js",
+  "description": "Terraform test framework",
+  "main": "bin/cli.js",
   "scripts": {
     "test": "jasmine",
     "lint": "semistandard",
