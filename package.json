@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jasmine",
     "lint": "semistandard",
-    "lint-fix": "semistandard --fix | snazzy"
+    "lint-fix": "semistandard --fix | snazzy",
+    "docker-build": "docker build -t tftest ."
   },
   "bin": {
     "tftest": "bin/cli.js"
