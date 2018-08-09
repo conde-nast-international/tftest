@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+const pck = require('../package.json');
 const fs = require('fs');
 const path = require('path');
 const program = require('commander');
@@ -18,13 +19,12 @@ const allItemsResultTrue = (results) => {
 const fileExists = (filename) => {
   let returnValue = false;
   try {
-    let tmpStat = fs.statSync(filename);
     returnValue = true;
   } catch (e) {
     returnValue = false;
   }
   return returnValue;
-}
+};
 
 const discoverTestFile = () => {
   let testFiles = [];
@@ -39,7 +39,7 @@ const discoverModules = () => {
   const cwd = process.cwd();
   const modulesJsonFileName = path.join(cwd, '.terraform', 'modules', 'modules.json');
   const modulesJson = JSON.parse(fs.readFileSync(modulesJsonFileName));
-  for(let i = 0; i < modulesJson.Modules.length; i++) {
+  for (let i = 0; i < modulesJson.Modules.length; i++) {
     let module = modulesJson.Modules[i];
     let tmpModule = {
       name: module.Root,
@@ -70,7 +70,6 @@ const displayTestResults = (results) => {
 
 const runTestRunner = async (planFilename, testFilename = null) => {
   let planJson = null;
-  let testJson = null;
   try {
     const parseResult = await tfjson(planFilename);
     if (parseResult === false) throw new Error('Failed to parse tf plan.');
@@ -89,7 +88,7 @@ const runTestRunner = async (planFilename, testFilename = null) => {
     } else {
       let modules = discoverModules();
       let testResultsMulti = [];
-      for(let i = 0; i < discoveredTestFiles.length; i++) {
+      for (let i = 0; i < discoveredTestFiles.length; i++) {
         let tmpTestResults = await tftest(discoveredTestFiles[i], planJson, modules);
         testResultsMulti = testResultsMulti.concat(tmpTestResults);
       }
@@ -102,12 +101,11 @@ const runTestRunner = async (planFilename, testFilename = null) => {
       console.error(`Failed to find file: ${testFilename}`);
       process.exit(1);
     }
-
   }
   displayTestResults(testResults);
 };
 
-program.version('0.1.0');
+program.version(pck.version);
 
 program.command('test <planFilename> [testFilename]')
   .description('Run test')
