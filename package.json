@@ -4,10 +4,12 @@
   "description": "Terraform test framework",
   "main": "bin/tftest",
   "scripts": {
+    "postinstall": "npm run download-dependencies",
     "test": "istanbul cover jasmine && istanbul check-coverage coverage/coverage.json",
     "test-coverage": "istanbul cover jasmine",
     "lint": "semistandard",
     "lint-fix": "semistandard --fix | snazzy",
+    "download-dependencies": "rm -f ./node_modules/.bin/tfjson-*; download-github-release -s `./scripts/get_os.js` conde-nast-international tfjson ./node_modules/.bin/; chmod +x ./node_modules/.bin/tfjson-*",
     "docker-build": "docker build -t tftest ."
   },
   "bin": {
@@ -26,7 +28,7 @@
     ]
   },
   "dependencies": {
-    "commander": "^2.16.0",
+    "download-github-release": "^0.3.2",
     "jasmine": "^3.2.0",
     "jasmine-spec-reporter": "^4.2.1"
   },

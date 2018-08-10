@@ -12,4 +12,6 @@ if (process.env.PLAN_FILE === undefined) {
   process.exit(1);
 };
 
-runner(process.env.TERRAFORM_FOLDER, process.env.PLAN_FILE);
+const cliRun = new runner(process.env.TERRAFORM_FOLDER, process.env.PLAN_FILE);
+cliRun.setupJasmine();
+cliRun.execute();
