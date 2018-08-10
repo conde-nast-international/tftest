@@ -4,8 +4,6 @@ jobs:
     docker:
       - image: quay.io/condenastinternational/cnid-node-base:ee12a026576f82cbbce1f414d0ee0eb4f9935aad
     working_directory: ~/conde-nast-international/tftest
-    environment:
-      BASH_ENV: ~/.bashrc
     steps:
     - checkout
     - run:
@@ -20,7 +18,7 @@ jobs:
             chmod +x ~/tmp/bin/tfjson
     - run:
         name: Adds tfjson to PATH
-        command: echo 'export PATH=~/conde-nast-international/okta-cli/node_modules/.bin:~/tmp/bin:$PATH' >> $BASH_ENV
+        command: echo 'export PATH=~/conde-nast-international/okta-cli/node_modules/.bin:~/tmp/bin:$PATH'
     - run:
         name: Test tftest
         command: npm test
