@@ -1,6 +1,7 @@
 const path = require('path');
 const fs = require('fs');
-const { fileExists, discoverTests, jsonSafeParse } = require('../../lib/filesystem.js');
+const { fileExists, jsonSafeParse } = require('../../lib/generic.js');
+const { discoverTests } = require('../../lib/filesystem.js');
 const fixtureFile = (fileName) => path.join(__dirname, 'fixtures', fileName);
 
 describe('filesystem', () => {
