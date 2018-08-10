@@ -21,6 +21,7 @@ jobs:
         shell: /bin/bash
         command: |
             echo 'export PATH=~/conde-nast-international/okta-cli/node_modules/.bin:~/tmp/bin:$PATH' >> $BASH_ENV
+            source ~/.bashrc
     - run:
         shell: /bin/bash
         name: Test tftest
