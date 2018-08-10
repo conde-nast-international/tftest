@@ -32,3 +32,9 @@ jspm_packages/
 
 # Yarn Integrity file
 .yarn-integrity
+
+# Output from coverage reports
+coverage
+
+# Terraform plugins in test folders
+spec/lib/fixtures/**/.terraform/plugins/**
