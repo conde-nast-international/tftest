@@ -26,7 +26,6 @@
     ]
   },
   "dependencies": {
-    "commander": "^2.16.0",
     "jasmine": "^3.2.0",
     "jasmine-spec-reporter": "^4.2.1"
   },
