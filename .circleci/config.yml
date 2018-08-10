@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  publish:
+  test:
     docker:
       - image: quay.io/condenastinternational/cnid-node-base:ee12a026576f82cbbce1f414d0ee0eb4f9935aad
     working_directory: ~/conde-nast-international/tftest
@@ -21,6 +21,7 @@ jobs:
     - run:
         name: Test tftest
         command: npm test
+  publish:
     - run:
         name: Add deploy token to npmrc
         command: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
@@ -34,7 +35,10 @@ workflows:
   version: 2
   deployment_pipeline:
     jobs:
+      - test
       - publish:
+          requires:
+            - test
           filters:
             branches:
               only:
