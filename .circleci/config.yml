@@ -6,7 +6,6 @@ jobs:
     working_directory: ~/conde-nast-international/tftest
     steps:
     - checkout
-    - setup_remote_docker
     - run:
         name: Install dependencies
         command: npm install
@@ -22,6 +21,11 @@ jobs:
         name: Test tftest
         command: npm test
   publish:
+    docker:
+      - image: quay.io/condenastinternational/cnid-node-base:ee12a026576f82cbbce1f414d0ee0eb4f9935aad
+    working_directory: ~/conde-nast-international/tftest
+    steps:
+    - checkout
     - run:
         name: Add deploy token to npmrc
         command: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
