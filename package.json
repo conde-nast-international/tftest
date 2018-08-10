@@ -8,6 +8,7 @@
     "test-coverage": "istanbul cover jasmine",
     "lint": "semistandard",
     "lint-fix": "semistandard --fix | snazzy",
+    "download-dependencies": "rm -f ./node_modules/.bin/tfjson-*; download-github-release -s `./scripts/get_os.js` conde-nast-international tfjson ./node_modules/.bin/",
     "docker-build": "docker build -t tftest ."
   },
   "bin": {
@@ -17,6 +18,7 @@
   "license": "ISC",
   "husky": {
     "hooks": {
+      "post-checkout": "npm run download-dependencies",
       "pre-commit": "npm run test && npm run lint"
     }
   },
@@ -26,6 +28,8 @@
     ]
   },
   "dependencies": {
+    "download-github-release": "^0.3.2",
+    "gh-latest-release": "^1.0.0",
     "jasmine": "^3.2.0",
     "jasmine-spec-reporter": "^4.2.1"
   },
