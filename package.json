@@ -2,7 +2,7 @@
   "name": "@condenast/tftest",
   "version": "1.1.1",
   "description": "Terraform test framework",
-  "main": "bin/cli.js",
+  "main": "bin/tftest",
   "scripts": {
     "test": "istanbul cover jasmine && istanbul check-coverage coverage/coverage.json",
     "test-coverage": "istanbul cover jasmine",
