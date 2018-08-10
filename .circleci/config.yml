@@ -18,7 +18,9 @@ jobs:
             chmod +x ~/tmp/bin/tfjson
     - run:
         name: Adds tfjson to PATH
-        command: echo 'export PATH=~/conde-nast-international/okta-cli/node_modules/.bin:~/tmp/bin:$PATH'
+        command: |
+            echo 'export PATH=~/conde-nast-international/okta-cli/node_modules/.bin:~/tmp/bin:$PATH' >> $BASH_ENV
+            source /home/circleci/.bashrc
     - run:
         name: Test tftest
         command: npm test
