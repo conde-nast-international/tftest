@@ -11,12 +11,6 @@ jobs:
         name: Install dependencies
         command: npm install
     - run:
-        name: curl tfjson binary
-        command: |
-            TFJSONBIN=$(curl -XGET https://api.github.com/repos/conde-nast-international/tfjson/releases/latest | jq -r '.assets[] | select(.browser_download_url | contains("linux")) | .browser_download_url')
-            curl -L $TFJSONBIN > /usr/local/bin/tfjson
-            chmod +x /usr/local/bin/tfjson
-    - run:
         name: Test tftest
         command: npm test
   publish:
