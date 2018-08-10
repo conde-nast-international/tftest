@@ -7,13 +7,20 @@ jobs:
     steps:
     - checkout
     - setup_remote_docker
-    - run: 
+    - run:
         name: Install dependencies
         command: npm install
     - run:
+        name: curl tfjson binary
+        command: |
+            mkdir -p ~/tmp/bin
+            TFJSONBIN=$(curl -XGET https://api.github.com/repos/conde-nast-international/tfjson/releases/latest | jq -r '.assets[] | select(.browser_download_url | contains("linux")) | .browser_download_url')
+            curl -L $TFJSONBIN > ~/tmp/bin/tfjson
+            chmod +x ~/tmp/bin/tfjson
+    - run: export PATH="~/conde-nast-international/okta-cli/node_modules/.bin:~/tmp/bin:$PATH"
+    - run:
         name: Test tftest
         command: npm test
-    - run: export PATH="~/conde-nast-international/okta-cli/node_modules/.bin:$PATH"
     - run:
         name: Add deploy token to npmrc
         command: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
