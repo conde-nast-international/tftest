@@ -7,8 +7,12 @@ const { fileExists,
         jsonSafeParse,
         readDir,
         isInChangeWindow,
-        tfjsonBin
+        tfjsonBin,
+        getTfJsonUrl,
+        getTfJson
       } = require('../../lib/generic.js');
+
+const distros = ['linux', 'darwin', 'windows']
 
 describe('tfjsonBin', () => {
   it('tfjson not found', () => {
@@ -105,3 +109,37 @@ describe('isInChangeWindow', () => {
   });
 
 });
+
+describe('getTfJsonUrl', () => {
+  for (i=0; i++; i <= distros.length) {
+    it(`Should have ${distros[i]} in its url`, (done) => {
+      getTfJsonUrl(distro[i]).then(function(result) {
+      expect(result).toContain("linux") 
+      done();
+      })
+    })
+    it('Gets the github for ${distros[i]} url once the promise is resolved', (done) => {
+      getTfJsonUrl(distro[i]).then(function(result) {
+        expect(result).toContain("https://github.com");
+        done();
+      })
+    })
+    it('Should have for ${distros[i]}  semver version', (done) => {
+      getTfJsonUrl(distro[i]).then(function(result) {
+        expect(result).toMatch(/v(\d+\.)?(\d+\.)?(\*|\d+)/)
+        done();
+      })
+    })
+  }
+});
+
+describe('getTfJson', () => {
+  for (i=0; i++; i <= distros.length) {
+    it('Creates a tfjson file under ./node_modules/.bin/tfjson', (done) => {
+      getTfJson(distros[i]).then(function(result) {
+        expect(fs.statSync('./node_modules/.bin/tfjson')).toBeTruthy()
+        done();
+      })
+    })
+  }
+})
