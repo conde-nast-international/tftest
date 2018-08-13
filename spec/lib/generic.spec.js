@@ -76,10 +76,6 @@ describe('isInChangeWindow', () => {
     expect(isInChangeWindow({changeWindow: 1})).toBeFalsy();
   });
 
-  it('Object.changeWindow does not have property to', () => {
-    expect(isInChangeWindow({changeWindow: 1})).toBeFalsy();
-  });
-
   it('Return true because it\'s on window ', () => {
     let past = (new Date()).getTime() - 10000;
     let future = (new Date()).getTime() + 10000;
