@@ -34,10 +34,14 @@ workflows:
   deployment_pipeline:
     jobs:
       - test
-      - publish:
+      - publish_on_hold:
+          type: approval
           requires:
             - test
           filters:
             branches:
               only:
                 - master
+      - publish:
+          requires:
+            - publish_on_hold
