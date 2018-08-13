@@ -10,7 +10,7 @@ jobs:
     - run:
         name: Install dependencies
         shell: /bin/sh -eo pipefail -l
-        command: npm install
+        command: export TERM=dumb && npm install
     - run:
         name: Test tftest
         command: npm test
