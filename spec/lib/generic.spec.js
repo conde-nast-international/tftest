@@ -1,4 +1,6 @@
 const path = require('path');
+const fs = require('fs');
+
 const { fileExists,
         runBin,
         readFile,
@@ -9,7 +11,16 @@ const { fileExists,
       } = require('../../lib/generic.js');
 
 describe('tfjsonBin', () => {
-  //missing the case of not finding file
+  it('tfjson not found', () => {
+    const modules = path.join(__dirname, '..','..', 'node_modules', '.bin');
+    spyOn(fs,'readdirSync').and.returnValue(['file-does-not-exist-1','file-does-not-exist-2']);
+    try{
+      tfjsonBin()
+      expect('This should not pass').toEqual(true);
+    }catch(e){
+      expect(e).toEqual(new Error(`Failed to find tfjson in ${modules}`));
+    }
+  });
 
   it('Expect to find tfjson', () => {
     expect(tfjsonBin()).not.toBeFalsy(fileExists(tfjsonBin()));
@@ -74,6 +85,11 @@ describe('isInChangeWindow', () => {
 
   it('Object.changeWindow does not have property from', () => {
     expect(isInChangeWindow({changeWindow: 1})).toBeFalsy();
+  });
+
+  it('Return true because it\'s on window ', () => {
+    let past = (new Date()).getTime() - 10000;
+    expect(isInChangeWindow({changeWindow: {from: past}})).toBeFalsy();
   });
 
   it('Return true because it\'s on window ', () => {
