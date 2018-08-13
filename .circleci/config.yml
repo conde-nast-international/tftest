@@ -9,7 +9,7 @@ jobs:
     - checkout
     - run:
         name: Install dependencies
-        command: npm install && npm run download-dependencies
+        command: npm install
     - run:
         name: Test tftest
         command: npm test
