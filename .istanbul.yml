@@ -4,7 +4,7 @@ instrumentation:
     extensions:
         - .js
     default-excludes: true
-    excludes: [ 'spec/**' ]
+    excludes: [ 'spec/**', 'lib/runner.js', 'lib/generic.js' ]
     embed-source: false
     variable: __coverage__
     compact: true
@@ -41,14 +41,14 @@ hooks:
     handle-sigint: false
 check:
     global:
-        statements: 90
-        lines: 90
-        branches: 80
-        functions: 90
+        statements: 50
+        lines: 50
+        branches: 50
+        functions: 50
         excludes: []
     each:
-        statements: 90
-        lines: 90
-        branches: 80
-        functions: 90
+        statements: 50
+        lines: 50
+        branches: 50
+        functions: 50
         excludes: []
