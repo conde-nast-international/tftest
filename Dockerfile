@@ -3,12 +3,10 @@ FROM node:8.11.3-alpine
 USER root
 WORKDIR /home/node/
 
-COPY package.json /home/node/
-COPY package-lock.json /home/node/
-COPY lib/ /home/node/lib/
-COPY bin/ /home/node/bin/
+COPY . /home/node
 
-RUN npm install --production
+RUN npm install --loglevel warn
+RUN npm run download-dependencies
 
 USER node
-CMD ["npm", "test"]
+CMD ["npm", "run" ,"test"]
