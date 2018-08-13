@@ -1,17 +1,37 @@
 #!/usr/bin/env node
-// expects process.env.TERRAFORM_FOLDER and process.env.PLAN_FILE to be set
+
+const path = require('path');
+const commander = require('commander');
+const Plan = require('../lib/plan.js');
 const Runner = require('../lib/runner.js');
+const { getTfJson } = require('../lib/generic.js');
 
-if (process.env.TERRAFORM_FOLDER === undefined) {
-  console.error('Error: env TERRAFORM_FOLDER not set');
-  process.exit(1);
-};
+let tfFolder = null;
+let tfPlan = null;
 
-if (process.env.PLAN_FILE === undefined) {
-  console.error('Error: env PLAN_FILE not set');
-  process.exit(1);
-};
+const show = (arg, bla) => {
+  const planPath=path.join(process.cwd(), arg);
+  console.log(JSON.stringify(new Plan(planPath).plan, null, 2));
+}
 
-const cliRun = new Runner(process.env.TERRAFORM_FOLDER, process.env.PLAN_FILE);
-cliRun.setupJasmine();
-cliRun.execute();
+const cli = (arg) => {
+  if (commander.terraformFolder) tfFolder = commander.terraformFolder
+  if (commander.terraformPlan) tfPlan = commander.terraformPlan
+  if (tfFolder && tfPlan) {
+    const cliRun = new Runner(commander.terraformFolder, commander.terraformPlan);
+    cliRun.setupJasmine();
+    cliRun.execute();
+  }
+}
+
+const fetchTjjson = (os) => {
+  getTfJson((os=== 'win32') ? 'windows' : os);
+}
+
+commander
+  .version(require('../package.json').version)
+  .option('-t, --terraformFolder <path>', 'Path of terraform modules folder <path>', cli, process.cwd())
+  .option('-p, --terraformPlan <path>', 'Path of terraform modules plan <path>', cli, path.join(process.cwd(), 'output.plan'))
+  .option('-s, --show <type>', 'Path of terraform plan <path> to print json', show, path.join(process.cwd(), 'output.plan'))
+  .option('-j, --gettfjson', 'Get tfjson for', fetchTjjson, 'linux')
+  .parse(process.argv);
