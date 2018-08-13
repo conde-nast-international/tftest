@@ -9,7 +9,7 @@ jobs:
     - checkout
     - run:
         name: Install dependencies
-        shell: /bin/bash -eo pipefail -l
+        shell: /bin/sh -eo pipefail -l
         command: npm install
     - run:
         name: Test tftest
