@@ -4,7 +4,7 @@ instrumentation:
     extensions:
         - .js
     default-excludes: true
-    excludes: [ 'spec/**', 'lib/runner.js', 'lib/generic.js' ]
+    excludes: [ 'spec/**' ]
     embed-source: false
     variable: __coverage__
     compact: true

@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+const fs = require('fs');
+const os = require('os');
 const path = require('path');
 const commander = require('commander');
 const Plan = require('../lib/plan.js');
@@ -24,14 +26,24 @@ const cli = (arg) => {
   }
 }
 
-const fetchTjjson = (os) => {
-  getTfJson((os=== 'win32') ? 'windows' : os);
-}
+const fetchTfjson = () => {
+  const packageJsonfilename = path.resolve(__dirname, '..', 'package.json');
+  const packageJson = JSON.parse(fs.readFileSync(packageJsonfilename));
+
+  const osString = (process.platform === 'win32') ? 'windows' : process.platform;
+  const archString = (os.arch() === 'x64') ? 'amd64' : 'i386';
+
+  const tfjsonRelease = packageJson.binaryDependencies.tftest;
+
+  getTfJson(osString, archString, tfjsonRelease);
+};
+
+const cwd = process.cwd();
 
 commander
   .version(require('../package.json').version)
-  .option('-t, --terraformFolder <path>', 'Path of terraform modules folder <path>', cli, process.cwd())
-  .option('-p, --terraformPlan <path>', 'Path of terraform modules plan <path>', cli, path.join(process.cwd(), 'output.plan'))
-  .option('-s, --show <type>', 'Path of terraform plan <path> to print json', show, path.join(process.cwd(), 'output.plan'))
-  .option('-j, --gettfjson', 'Get tfjson for', fetchTjjson, 'linux')
+  .option('-t, --terraformFolder <path>', 'Path of terraform modules folder <path>', cli, cwd)
+  .option('-p, --terraformPlan <path>', 'Path of terraform modules plan <path>', cli, path.join(cwd, 'output.plan'))
+  .option('-s, --show <type>', 'Path of terraform plan <path> to print json', show, path.join(cwd, 'output.plan'))
+  .option('-j, --gettfjson', 'Get tfjson for', fetchTfjson)
   .parse(process.argv);

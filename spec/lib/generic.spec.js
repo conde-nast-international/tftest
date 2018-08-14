@@ -12,8 +12,6 @@ const { fileExists,
         getTfJson
       } = require('../../lib/generic.js');
 
-const distros = ['linux', 'darwin', 'windows']
-
 describe('tfjsonBin', () => {
   it('tfjson not found', () => {
     const modules = path.join(__dirname, '..','..', 'node_modules', '.bin');
@@ -34,11 +32,11 @@ describe('tfjsonBin', () => {
 
 describe('runBin', () => {
   it('run valid bin and was output', () => {
-    expect(runBin('/bin/ls',__dirname).stdout.toString()).toEqual(readDir(__dirname).join('\n') + '\n');
+    expect(runBin('/bin/ls',[__dirname]).stdout.toString()).toEqual(readDir(__dirname).join('\n') + '\n');
   });
 
   it('tries to run invalid bin, return null', () => {
-    expect(runBin('/bin/invalid-bin',__dirname)).toEqual(null);
+    expect(runBin('/bin/invalid-bin',[__dirname])).toEqual(null);
   });
 });
 
@@ -111,35 +109,35 @@ describe('isInChangeWindow', () => {
 });
 
 describe('getTfJsonUrl', () => {
-  for (i=0; i++; i <= distros.length) {
+  for (let i = 0; i++; i <= distros.length) {
     it(`Should have ${distros[i]} in its url`, (done) => {
-      getTfJsonUrl(distro[i]).then(function(result) {
-      expect(result).toContain("linux") 
-      done();
-      })
-    })
-    it('Gets the github for ${distros[i]} url once the promise is resolved', (done) => {
-      getTfJsonUrl(distro[i]).then(function(result) {
-        expect(result).toContain("https://github.com");
+      getTfJsonUrl(distro[i], 'amd64', '0.2.1').then((result) => {
+        expect(result).toContain(distro[i]);
         done();
-      })
-    })
+      });
+    });
+    it('Gets the github for ${distros[i]} url once the promise is resolved', (done) => {
+      getTfJsonUrl(distro[i], 'amd64', '0.2.1').then((result) => {
+        expect(result).toContain('https://github.com');
+        done();
+      });
+    });
     it('Should have for ${distros[i]}  semver version', (done) => {
-      getTfJsonUrl(distro[i]).then(function(result) {
+      getTfJsonUrl(distro[i], 'amd64', '0.2.1').then((result) => {
         expect(result).toMatch(/v(\d+\.)?(\d+\.)?(\*|\d+)/)
         done();
-      })
-    })
+      });
+    });
   }
 });
 
 describe('getTfJson', () => {
-  for (i=0; i++; i <= distros.length) {
+  for (let i = 0; i++; i <= distros.length) {
     it('Creates a tfjson file under ./node_modules/.bin/tfjson', (done) => {
-      getTfJson(distros[i]).then(function(result) {
-        expect(fs.statSync('./node_modules/.bin/tfjson')).toBeTruthy()
+      getTfJson(distros[i], 'amd64', '0.2.1').then((result) => {
+        expect(fs.statSync('./node_modules/.bin/tfjson')).toBeTruthy();
         done();
-      })
-    })
+      });
+    });
   }
-})
+});

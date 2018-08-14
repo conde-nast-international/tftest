@@ -6,6 +6,7 @@ const fixtureFile = (fileName) => path.join(__dirname, 'fixtures', fileName);
 describe("plan class", () => {
   const simplePlanFilename = fixtureFile('simple-create.plan');
   const planJsonFilename = fixtureFile('simple-create.plan.json');
+
   it('should parse a file correctly - create', () => {
     const plan = new Plan(simplePlanFilename);
     const planJson = JSON.parse(fs.readFileSync(planJsonFilename));
