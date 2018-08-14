@@ -10,9 +10,9 @@ const simpleTestPlanJsonFilename = path.resolve(simpleTestFolder, 'plan.bin.json
 // expect in a global context is somehow being overwritten when embedding...
 const specExpect = expect;
 
-const getPlan = (fn) => JSON.parse(fs.readFileSync(fn));
+const getJsonFile = (fn) => JSON.parse(fs.readFileSync(fn));
 
-const getSimplePlan = () => getPlan(simpleTestPlanJsonFilename);
+const getSimplePlan = () => getJsonFile(simpleTestPlanJsonFilename);
 
 describe('the test runner', () => {
   let runner = null;
@@ -40,12 +40,28 @@ describe('the test runner', () => {
     });
   });
 
+  it('should skip a test when in a changeWindow', (done) => {
+    const changeWindowFolder = fixtureFile('ec2_example_with_changeWindow');
+    const changeWindowFolderPlanBin = path.resolve(changeWindowFolder, 'plan.bin');
+    const changeWindowFolderPlanJsonFilename = path.resolve(changeWindowFolder, 'plan.bin.json');
+    const changeWindowPlan = getJsonFile(changeWindowFolderPlanJsonFilename);
+    const changeWindowTests = require(path.resolve(changeWindowFolder, 'tests.js'));
+    let runWrong = getRunner(changeWindowFolder, changeWindowFolderPlanBin);
+    specExpect(runWrong.plan.plan).toEqual(changeWindowPlan);
+    runWrong.execute(() => {
+      const testResult = runWrong.getTestResult(changeWindowTests[0].description);
+      specExpect(testResult).toEqual('pending');
+      done();
+    });
+  });
+
+
   it('should report when the number of tests is wrong', (done) => {
     const wrongTestsFolder = fixtureFile('ec2_example_with_incorrect_number_of_tests');
     const wrongTestsPlanBin = path.resolve(wrongTestsFolder, 'plan.bin');
     const wrongTestsPlanJsonFilename = path.resolve(wrongTestsFolder, 'plan.bin.json');
     let runWrong = getRunner(wrongTestsFolder, wrongTestsPlanBin);
-    specExpect(runWrong.plan.plan).toEqual(getPlan(wrongTestsPlanJsonFilename));
+    specExpect(runWrong.plan.plan).toEqual(getJsonFile(wrongTestsPlanJsonFilename));
     runWrong.execute((success) => {
       specExpect(success).toEqual(false);
       done();

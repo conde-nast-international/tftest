@@ -5,8 +5,8 @@
   "main": "bin/tftest",
   "scripts": {
     "postinstall": "npm run download-dependencies",
-    "test": "istanbul cover jasmine -- --config=./jasmine.json && istanbul check-coverage coverage/coverage.json",
-    "test-coverage": "istanbul cover jasmine -- --config=./jasmine.json",
+    "test": "istanbul cover jasmine && istanbul check-coverage coverage/coverage.json",
+    "test-coverage": "istanbul cover jasmine",
     "lint": "semistandard",
     "lint-fix": "semistandard --fix | snazzy",
     "download-dependencies": "bin/tftest -j && chmod +x node_modules/.bin/tfjson",
