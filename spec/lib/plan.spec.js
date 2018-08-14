@@ -13,6 +13,13 @@ describe("plan class", () => {
     expect(plan.plan).toEqual(planJson);
   });
 
+// ec2_example_with_changeWindow
+
+  it('should fail to parse a file', () => {
+    const plan = new Plan(fixtureFile('simple-create-broken.plan'));
+    expect(plan.plan).toEqual(false);
+  });
+
   it('should discover the correct resources when provided a prefix', () => {
     const plan = new Plan(simplePlanFilename);
     const planJson = JSON.parse(fs.readFileSync(planJsonFilename));
