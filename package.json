@@ -9,8 +9,7 @@
     "test-coverage": "istanbul cover jasmine -- --config=./jasmine.json",
     "lint": "semistandard",
     "lint-fix": "semistandard --fix | snazzy",
-    "download-dependencies": "node scripts/get-tfjson.js linux && chmod +x node_modules/.bin/tfjson",
-    "download-dependencies-mac": "node scripts/get-tfjson.js darwin && chmod +x node_modules/.bin/tfjson",
+    "download-dependencies": "bin/tftest -j && chmod +x node_modules/.bin/tfjson",
     "docker-build": "docker build -t tftest ."
   },
   "bin": {
@@ -29,9 +28,10 @@
     ]
   },
   "dependencies": {
-    "node-fetch": "2.2.0",
+    "commander": "^2.17.1",
     "jasmine": "^3.2.0",
-    "jasmine-spec-reporter": "^4.2.1"
+    "jasmine-spec-reporter": "^4.2.1",
+    "node-fetch": "2.2.0"
   },
   "devDependencies": {
     "husky": "^1.0.0-rc.13",
