@@ -9,7 +9,7 @@ const { getTfJson } = require('../lib/generic.js');
 let tfFolder = null;
 let tfPlan = null;
 
-const show = (arg, bla) => {
+const show = (arg) => {
   const planPath=path.join(process.cwd(), arg);
   console.log(JSON.stringify(new Plan(planPath).plan, null, 2));
 }
