@@ -3,7 +3,10 @@
 ## How to implement tests
  WIP - This should be done after spec and test module are implemented
 
-## Install
+## Install using npm
+- `npm install @condenast/tftest -g`
+
+## Install for dev
 - `git clone git@github.com:conde-nast-international/tftest.git`
 - `cd tftest`
 - `npm install`
@@ -16,17 +19,52 @@
 - `tftest -t cnid-infrastructure/...<to-be-tested> -p output.plan`
 
 ## Usage
+```
+$ tftest -h
 
-`Usage: tftest [options]
+  Usage: tftest [options] [command]
 
   Options:
 
-    -V, --version                 output the version number
-    -t, --terraformFolder <path>  Path of terraform modules folder <path> (default: /home/user/projects/infra)
-    -p, --terraformPlan <path>    Path of terraform modules plan <path> (default: /home/user/projects/infra/output.plan)
-    -s, --show <type>             Path of terraform plan <path> to print json (default: /home/user/projects/infra/output.plan)
-    -j, --gettfjson <os>          Get tfjson for <os> (default: linux,darwin,windows)
-    -h, --help                    output usage information`
+    -V, --version   output the version number
+    -h, --help      output usage information
+
+  Commands:
+
+    test [options]  test
+    show [options]  show
+    gettfjson       gettfjson
+
+```
+
+```
+$ tftest test -h
+
+  Usage: test [options]
+
+  test
+
+  Options:
+
+    -t, --terraformFolder <terraformFolder>  Path of terraform modules folder <terraformFolder> (Default: /home/user/infra)
+    -p, --terraformPlan <terraformPlan>      Path of terraform modules plan <terraformPlan> (Default: /home/user/infra/output.plan )
+    -h, --help                               output usage information
+
+```
+
+```
+tftest show -h
+
+  Usage: show [options]
+
+  show
+
+  Options:
+
+    -p, --terraformPlan <terraformPlan>  Path of terraform modules plan <terraformPlan> (Default: /home/user/infra/output.plan )
+    -h, --help                           output usage information
+
+```
 
 ## How it works
 
