@@ -3,6 +3,11 @@
 ## How to implement tests
  WIP - This should be done after spec and test module are implemented
 
+## Install
+- `git clone git@github.com:conde-nast-international/tftest.git`
+- `cd tftest`
+- `npm install`
+
 ## How test are executed
 
 - `cd cnid-infrastructure/...<to-be-tested>`
