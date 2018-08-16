@@ -1,49 +1,48 @@
 #!/usr/bin/env node
-
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
-const commander = require('commander');
+const program = require('commander');
 const Plan = require('../lib/plan.js');
 const Runner = require('../lib/runner.js');
 const { getTfJson } = require('../lib/generic.js');
+const packageJson = require('../package.json');
 
-let tfFolder = null;
-let tfPlan = null;
+program.version(packageJson.version);
 
-const show = (arg) => {
-  const planPath=path.join(process.cwd(), arg);
-  console.log(JSON.stringify(new Plan(planPath).plan, null, 2));
+program.command('test')
+       .description('test')
+       .option('-t, --terraformFolder <terraformFolder>', 'Path of terraform modules folder <terraformFolder> (Default: ' + process.cwd() + ' )')
+       .option('-p, --terraformPlan <terraformPlan>', 'Path of terraform modules plan <terraformPlan> (Default: ' + path.join(process.cwd(), 'output.plan') + ' )')
+       .action((options) => {
+         let tfFolder = options.terraformFolder ? options.terraformFolder : process.cwd();
+         let tfPlan = options.terraformPlan ? options.terraformPlan : path.join(process.cwd(), 'output.plan');
+         const cliRun = new Runner(tfFolder, tfPlan);
+         cliRun.setupJasmine();
+         cliRun.execute();
+       });
+
+program.command('show')
+      .description('show')
+      .option('-p, --terraformPlan <terraformPlan>', 'Path of terraform modules plan <terraformPlan> (Default: ' + path.join(process.cwd(), 'output.plan') + ' )')
+      .action((options) => {
+        let tfPlan = options.terraformPlan ? options.terraformPlan : path.join(process.cwd(), 'output.plan');
+        let output = JSON.stringify(new Plan(tfPlan).plan, null, 2);
+        console.log(output);
+        return output;
+      });
+
+program.command('gettfjson')
+      .description('gettfjson', 'Download tfjson')
+      .action((options) => {
+        const osString = (process.platform === 'win32') ? 'windows' : process.platform;
+        const archString = (os.arch() === 'x64') ? 'amd64' : 'i386';
+        const tfjsonRelease = packageJson.binaryDependencies.tftest;
+        getTfJson(osString, archString, tfjsonRelease);
+      });
+
+program.parse(process.argv);
+
+module.exports = {
+    program
 }
-
-const cli = (arg) => {
-  if (commander.terraformFolder) tfFolder = commander.terraformFolder
-  if (commander.terraformPlan) tfPlan = commander.terraformPlan
-  if (tfFolder && tfPlan) {
-    const cliRun = new Runner(commander.terraformFolder, commander.terraformPlan);
-    cliRun.setupJasmine();
-    cliRun.execute();
-  }
-}
-
-const fetchTfjson = () => {
-  const packageJsonfilename = path.resolve(__dirname, '..', 'package.json');
-  const packageJson = JSON.parse(fs.readFileSync(packageJsonfilename));
-
-  const osString = (process.platform === 'win32') ? 'windows' : process.platform;
-  const archString = (os.arch() === 'x64') ? 'amd64' : 'i386';
-
-  const tfjsonRelease = packageJson.binaryDependencies.tftest;
-
-  getTfJson(osString, archString, tfjsonRelease);
-};
-
-const cwd = process.cwd();
-
-commander
-  .version(require('../package.json').version)
-  .option('-t, --terraformFolder <path>', 'Path of terraform modules folder <path>', cli, cwd)
-  .option('-p, --terraformPlan <path>', 'Path of terraform modules plan <path>', cli, path.join(cwd, 'output.plan'))
-  .option('-s, --show <type>', 'Path of terraform plan <path> to print json', show, path.join(cwd, 'output.plan'))
-  .option('-j, --gettfjson', 'Get tfjson for', fetchTfjson)
-  .parse(process.argv);
