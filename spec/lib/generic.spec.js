@@ -64,7 +64,7 @@ describe('fileExists', () => {
   it('returns true when a file does exist', () => {
     expect(fileExists(__filename)).toEqual(true);
   });
-  it("returns false when a file doesn't exist", () => {
+  it('returns false when a file doesn\'t exist', () => {
     expect(fileExists('file_that_doesnt_exist.txt')).toEqual(false);
   });
 });

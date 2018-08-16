@@ -71,3 +71,19 @@ tftest show -h
 - tftest now looks for `tests.js` in the current working directory to discover modules that are being used, and their "prefix"
 - tftest will now examine `.terraform/modules/modules.json` to detect any modules that contain a `tests.js` file.
 - tftest executes the tests against the plan file, if any tests fail the return code is non-zero.
+
+## How to debug
+
+This program uses [debug](https://www.npmjs.com/package/debug) to be able to debug use environment variable `DEBUG`
+Example:
+`$ ENV DEBUG=tftest,generic bin/tftest show -p spec/lib/fixtures/simple-create.plan`
+
+It's possible to combine multiple files names using `,`.
+Value should be name of file that you want to debug.
+
+Available values for `DEBUG`:
+- tftest
+- filesystem
+- generic
+- plan
+- runner

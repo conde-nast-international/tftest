@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+const debug = require('debug')('tftest');
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
@@ -41,6 +42,8 @@ program.command('gettfjson')
         getTfJson(osString, archString, tfjsonRelease);
       });
 
+
+debug('program args:', process.argv);
 program.parse(process.argv);
 
 module.exports = {
