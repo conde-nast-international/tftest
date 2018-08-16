@@ -8,19 +8,6 @@ const Runner = require('../lib/runner.js');
 const { getTfJson } = require('../lib/generic.js');
 const packageJson = require('../package.json');
 
-const show = (plan) => {
-  const planPath=path.join(process.cwd(), plan);
-  let output = JSON.stringify(new Plan(planPath).plan, null, 2);
-  console.log(output);
-  return output;
-}
-
-const cli = (tfFolder, tfPlan) => {
-  const cliRun = new Runner(tfFolder, tfPlan);
-  cliRun.setupJasmine();
-  cliRun.execute();
-}
-
 program.version(packageJson.version);
 
 program.command('test')
@@ -30,7 +17,9 @@ program.command('test')
        .action((options) => {
          let tfFolder = options.terraformFolder ? options.terraformFolder : process.cwd();
          let tfPlan = options.terraformPlan ? options.terraformPlan : path.join(process.cwd(), 'output.plan');
-         cli(tfFolder, tfPlan);
+         const cliRun = new Runner(tfFolder, tfPlan);
+         cliRun.setupJasmine();
+         cliRun.execute();
        });
 
 program.command('show')
@@ -38,7 +27,9 @@ program.command('show')
       .option('-p, --terraformPlan <terraformPlan>', 'Path of terraform modules plan <terraformPlan> (Default: ' + path.join(process.cwd(), 'output.plan') + ' )')
       .action((options) => {
         let tfPlan = options.terraformPlan ? options.terraformPlan : path.join(process.cwd(), 'output.plan');
-        show(tfPlan);
+        let output = JSON.stringify(new Plan(tfPlan).plan, null, 2);
+        console.log(output);
+        return output;
       });
 
 program.command('gettfjson')
@@ -53,7 +44,5 @@ program.command('gettfjson')
 program.parse(process.argv);
 
 module.exports = {
-    show,
-    cli,
     program
 }
