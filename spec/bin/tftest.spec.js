@@ -31,13 +31,5 @@ describe('tftest', () => {
       expect(program.commands[2]._argsDescription).toEqual('Download tfjson');
       expect(program.commands[2]._description).toEqual('gettfjson');
     });
-
-    it('program gettfjson command with arguments', () => {
-      program.parse(['gettfjson']);
-      expect(program.commands[2].options.length).toEqual(0);
-      expect(program.commands[2]._argsDescription).toEqual('Download tfjson');
-      expect(program.commands[2]._description).toEqual('gettfjson');
-    });
-
   });
 });
