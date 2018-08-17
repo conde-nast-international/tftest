@@ -30,6 +30,14 @@
   "binaryDependencies": {
     "tftest": "0.2.1"
   },
+  "jasmineConfigRunner":{
+    "stopSpecOnExpectationFailure": false,
+    "random": false,
+    "colors": true,
+    "spec": {
+      "displayPending": true
+    }
+  },
   "dependencies": {
     "commander": "^2.17.1",
     "debug": "^3.1.0",

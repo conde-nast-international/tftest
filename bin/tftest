@@ -20,7 +20,15 @@ program.command('test')
          let tfPlan = options.terraformPlan ? options.terraformPlan : path.join(process.cwd(), 'output.plan');
          const cliRun = new Runner(tfFolder, tfPlan);
          cliRun.setupJasmine();
-         cliRun.execute();
+         cliRun.execute((success) => {
+           if (success) {
+             console.log('All tests completed successfully.');
+             process.exit(0);
+           } else {
+             console.error(`ERROR: Invalid number of tests executed: ${cliRun.numTestsRun} != ${cliRun.numTestsExpected}`);
+             process.exit(1);
+           }
+         });
        });
 
 program.command('show')
