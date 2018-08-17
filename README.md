@@ -43,7 +43,7 @@ module.exports = [{
   'args': {},
   'tests': [
     function (obj, args) {
-      if ('dummy_condition' in obj.new.haOwnProperty) {
+      if ('dummy_condition' in obj.new.hasOwnProperty) {
         expect(obj.new.dummy_condition).toEqual(true);
       }
     }
@@ -76,7 +76,7 @@ module.exports = [{
   'args': {},
   'tests': [
     function (obj, args) {
-      if ('truthy' in obj.new.haOwnProperty) {
+      if ('truthy' in obj.new.hasOwnProperty) {
         expect(obj.new.truthy).toEqual(true);
       }
     }
@@ -110,7 +110,6 @@ in order to write tests. By default we use `jasmine` [expectations].
 ## Good Practices
 * Use a javascript linter for tests
 * Keep the code as independent as possible without using `node_modules`
-* Comment what the tests are doing and what needs to be tested further
 * Write tests for each resource
 
 ## How it works
