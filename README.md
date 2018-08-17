@@ -22,7 +22,7 @@ infrastructure.
 
 ## How to implement tests
 1. Create a new module
-2. Create `tests.js` on the new module. We create the `tests.js` here to test
+2. Create tests.js under the new module's folder. We create the `tests.js` here to test
 what is in the module like a unit test. To use this test we need to add a file called modules.js under the folder of the module implementation.
 ```
 # cd /module/truthy
@@ -77,8 +77,9 @@ module.exports = [{
 ```
 5. Get the plan of the implementation. In the implementation directory run
 `terraform init` and `terraform plan -out=plan.out`
-6. In the implementation directory run `tftest test -p plan.out`
-7. To debug the terraform plan json run `tftest show -p plan.out`
+6. Install the tftest using `npm install -g @condenast/tftest`
+7. In the implementation directory run `tftest test -p plan.out`
+8. To debug the terraform plan json run `tftest show -p plan.out`
 
 ## More examples
 * [ec2-example](https://github.com/conde-nast-international/tftest/tree/master/spec/lib/fixtures/ec2_example)
