@@ -96,6 +96,8 @@ module.exports = [{
 * [ec2-example-withIncorrectNumberOfTests](https://github.com/conde-nast-international/tftest/tree/master/spec/lib/fixtures/ec2_example_with_incorrect_number_of_tests)
 * [vpc-example](https://github.com/conde-nast-international/tftest/tree/master/spec/lib/fixtures/vpc_example)
 * [vpc-iam-example](https://github.com/conde-nast-international/tftest/tree/master/spec/lib/fixtures/vpc_plus_iam_example)
+* [rds-cnid-terraform-modules](https://github.com/conde-nast-international/cnid-terraform-modules/blob/master/rds-postgresql/tests.js)
+* [rds-implementation-cnid-infrastructure](https://github.com/conde-nast-international/cnid-infrastructure/blob/master/azimuth/staging/eu-central-1/kubernetes-concourse-rds/tests.js)
 
 ## Assertions
 Since we are using javascript in testing the terraform module we can use any
