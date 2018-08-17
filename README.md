@@ -13,15 +13,20 @@ infrastructure.
 ### With Modules
 ![tftest-workflow-with](tftest.png)
 
+> To implement tests on both module and the implementation of module. 
+
 ### Without Modules
 ![tftest-workflow-without](tftest-simple.png)
+
+> To implement test on just the module if we dont have any properties to test on the implementation. 
 
 ## How to implement tests
 1. Create a new module
 2. Create `tests.js` on the new module. We create the `tests.js` here to test
-what is in the module like a unit test. To use this test we need to add
-`modules.js` on the implementation. 
+what is in the module like a unit test. To use this test we need to add a file called modules.js under the folder of the module implementation.
 ```
+# cd /module/truthy
+# cat tests.js
 # sample
 module.exports = [{
   'name': 'aws_instance.dummy',
@@ -29,7 +34,7 @@ module.exports = [{
   'args': {},
   'tests': [
     function (obj, args) {
-      if ('dummy_condition' in obj.new) {
+      if ('dummy_condition' in obj.new.haOwnProperty) {
         expect(obj.new.dummy_condition).toEqual(true);
       }
     }
@@ -38,10 +43,11 @@ module.exports = [{
 ];
 ```
 3. Create the implementation of the module
-4. Create `tests.js` and `module.js` on the implementation. We create
+4. Create `tests.js` and `module.js` on the implementation folder. We create
 `tests.js` in the implementation to test the values of the properties. For
 example in this case we want truthy to have the value of true.
 ```
+# cd /implementation/truthy
 # cat modules.js
 module.exports = [
   { name: 'aws_instance', prefix: 'dummy' }
@@ -59,7 +65,7 @@ module.exports = [{
   'args': {},
   'tests': [
     function (obj, args) {
-      if ('truthy' in obj.new) {
+      if ('truthy' in obj.new.haOwnProperty) {
         expect(obj.new.truthy).toEqual(true);
       }
     }
@@ -95,7 +101,7 @@ in order to write tests. By default we use `jasmine` [expectations].
 
 ## Properties for testing
 - `'name'` - (string) Module to be exported from the `tests.js` 
-- `'description'` - (string) Description of the tests which will be shown on stdout.
+- `'description'` - (string) Description of the tests which will be shown on jasmine stdout with (√) or (x).
 - `'changeWindow'` - (object: to, from) This is used for destroy and create. For a window of time the tests will be skipped. [Implementation Reference changeWindow]
 - `'count'` - (integer) The number of times to run the tests should be same with the terraform code.
 - `'args'` - (object) Argument to be created in the `tests.js` this will be used in the tests function
