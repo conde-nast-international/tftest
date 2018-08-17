@@ -13,12 +13,12 @@ infrastructure.
 ### With Modules
 ![tftest-workflow-with](tftest.png)
 
-> To implement tests on both module and the implementation of module. 
+> To implement tests on both module and the implementation of module.
 
 ### Without Modules
 ![tftest-workflow-without](tftest-simple.png)
 
-> To implement test on just the module if we dont have any properties to test on the implementation. 
+> To implement test on just the module if we dont have any properties to test on the implementation.
 
 ## How to implement tests
 1. Create a new module
@@ -88,9 +88,9 @@ module.exports = [{
 ## Assertions
 Since we are using javascript in testing the terraform module we can use any
 arbitrary javascript function under `'tests'` function in the `module.exports` condition
-in order to write tests. By default we use `jasmine` [expectations]. 
+in order to write tests. By default we use `jasmine` [expectations].
 
-`obj` and `args` are passed in the jasmine function. 
+`obj` and `args` are passed in the jasmine function.
 `obj` will contain terraform plan object which will have `obj.new` and `obj.old`
 
 ## Good Practices
@@ -100,7 +100,7 @@ in order to write tests. By default we use `jasmine` [expectations].
 * Write tests for each resource
 
 ## Properties for testing
-- `'name'` - (string) Module to be exported from the `tests.js` 
+- `'name'` - (string) Module to be exported from the `tests.js`
 - `'description'` - (string) Description of the tests which will be shown on jasmine stdout with (√) or (x).
 - `'changeWindow'` - (object: to, from) This is used for destroy and create. For a window of time the tests will be skipped. [Implementation Reference changeWindow]
 - `'count'` - (integer) The number of times to run the tests should be same with the terraform code.
