@@ -25,6 +25,16 @@ infrastructure.
 2. Create tests.js under the new module's folder. We create the `tests.js` here to test
 what is in the module like a unit test. To use this test we need to add a file called modules.js under the folder of the module implementation.
 ```
+Properties for testing
+- `'name'` - (string) Module to be exported from the `tests.js`
+- `'description'` - (string) Description of the tests which will be shown on jasmine stdout with (√) or (x).
+- `'changeWindow'` - (object: to, from) This is used for destroy and create. For a window of time the tests will be skipped. [Implementation Reference changeWindow]
+- `'count'` - (integer) The number of times to run the tests should be same with the terraform code. This should match the var.count parameter in module if it exists 
+- `'args'` - (object) Argument to be created in the `tests.js` this will be used in the tests function
+- `'tests'` - (array of functions) Tests to be run against the module this should have [expectations]
+```
+
+```
 # cd /module/truthy
 # cat tests.js
 # sample
@@ -101,14 +111,6 @@ in order to write tests. By default we use `jasmine` [expectations].
 * Keep the code as independent as possible without using `node_modules`
 * Comment what the tests are doing and what needs to be tested further
 * Write tests for each resource
-
-## Properties for testing
-- `'name'` - (string) Module to be exported from the `tests.js`
-- `'description'` - (string) Description of the tests which will be shown on jasmine stdout with (√) or (x).
-- `'changeWindow'` - (object: to, from) This is used for destroy and create. For a window of time the tests will be skipped. [Implementation Reference changeWindow]
-- `'count'` - (integer) The number of times to run the tests should be same with the terraform code.
-- `'args'` - (object) Argument to be created in the `tests.js` this will be used in the tests function
-- `'tests'` - (array of functions) Tests to be run against the module this should have [expectations]
 
 ## How it works
 
