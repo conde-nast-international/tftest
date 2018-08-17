@@ -10,7 +10,11 @@ infrastructure.
 
 ## Workflow
 
-![image](tftest.png)
+### With Modules
+![tftest-workflow-with](tftest.png)
+
+### Without Modules
+![tftest-workflow-without](tftest-simple.png)
 
 ## How to implement tests
 1. Create a new module
