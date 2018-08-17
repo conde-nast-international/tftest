@@ -13,7 +13,7 @@ infrastructure.
 ### With Modules
 ![tftest-workflow-with](tftest.png)
 
-> To implement tests on both module and the implementation of module.
+> To implement tests on both module and the implementation of module. If we have properties that are tested using args.
 
 ### Without Modules
 ![tftest-workflow-without](tftest-simple.png)
@@ -52,7 +52,9 @@ example in this case we want truthy to have the value of true.
 module.exports = [
   { name: 'aws_instance', prefix: 'dummy' }
 ];
+```
 
+```
 # cat tests.js
 const dummy_properties = {
   "truthy": "true"
