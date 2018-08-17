@@ -15,17 +15,19 @@ what is in the module like a unit test. To use this test we need to add
 `modules.js` on the implementation. 
 ```
 # sample
-module.exports = [{ 
-    'name': 'aws_instance.dummy',
-    'count': 1,
-    'args': {},
-    'tests': [
-      function (obj, args) {
-				if ('dummy_condition' in obj.new) expect(obj.new.dummy_condition).toEqual(true);
-			}       
-    ]
-  }
-]; 
+module.exports = [{
+  'name': 'aws_instance.dummy',
+  'count': 1,
+  'args': {},
+  'tests': [
+    function (obj, args) {
+      if ('dummy_condition' in obj.new) {
+        expect(obj.new.dummy_condition).toEqual(true);
+      }
+    }
+  ]
+}
+];
 ```
 3. Create the implementation of the module
 4. Create `tests.js` and `module.js` on the implementation. We create
@@ -39,24 +41,23 @@ module.exports = [
 
 # cat tests.js
 const dummy_properties = {
-	"truthy": "true"
+  "truthy": "true"
 }
 
-module.exports = [{ 
-    'name': 'dummy.aws_instance.dummy',
-    'description': "Ensure true is equal to true",
-    'count': 1,
-    'args': {},
-    'tests': [
-      function (obj, args) {
-          if ('truthy' in obj.new) {
-            expect(obj.new.truthy).toEqual(value);
-          }
-        })       
+module.exports = [{
+  'name': 'dummy.aws_instance.dummy',
+  'description': 'Ensure true is equal to true',
+  'count': 1,
+  'args': {},
+  'tests': [
+    function (obj, args) {
+      if ('truthy' in obj.new) {
+        expect(obj.new.truthy).toEqual(true);
       }
-    ]
-  }
-]; 
+    }
+  ]
+}
+];
 ```
 5. Get the plan of the implementation. In the implementation directory run
 `terraform init` and `terraform plan -out=plan.out`
@@ -84,7 +85,7 @@ in order to write tests. By default we use `jasmine` [expectations].
 * Comment what the tests are doing and what needs to be tested further
 * Write tests for each resource
 
-## Fields for testing
+## Properties for testing
 - `'name'` - (string) Module to be exported from the `tests.js` 
 - `'description'` - (string) Description of the tests which will be shown on stdout.
 - `'changeWindow'` - (object: to, from) This is used for destroy and create. For a window of time the tests will be skipped. [Implementation Reference changeWindow]
