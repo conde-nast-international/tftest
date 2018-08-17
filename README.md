@@ -8,6 +8,10 @@ to without applying the code ourselves we created the tftest framework. This
 is specially important to check that the module will not destroy existing
 infrastructure.
 
+## Workflow
+
+![image](tftest.png)
+
 ## How to implement tests
 1. Create a new module
 2. Create `tests.js` on the new module. We create the `tests.js` here to test
