@@ -94,6 +94,7 @@ module.exports = [{
 * [ec2-example](https://github.com/conde-nast-international/tftest/tree/master/spec/lib/fixtures/ec2_example)
 * [ec2-example-withChangeWindow](https://github.com/conde-nast-international/tftest/tree/master/spec/lib/fixtures/ec2_example_with_changeWindow)
 * [ec2-example-withIncorrectNumberOfTests](https://github.com/conde-nast-international/tftest/tree/master/spec/lib/fixtures/ec2_example_with_incorrect_number_of_tests)
+* [ec2-example-using-has_changes](https://github.com/conde-nast-international/tftest/tree/master/spec/lib/fixtures/ec2_example_using_has_changes)
 * [vpc-example](https://github.com/conde-nast-international/tftest/tree/master/spec/lib/fixtures/vpc_example)
 * [vpc-iam-example](https://github.com/conde-nast-international/tftest/tree/master/spec/lib/fixtures/vpc_plus_iam_example)
 * [rds-cnid-terraform-modules](https://github.com/conde-nast-international/cnid-terraform-modules/blob/master/rds-postgresql/tests.js)

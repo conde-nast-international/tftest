@@ -3,6 +3,7 @@ resource "aws_instance" "ec2_example" {
   instance_type = "t2.micro"
 
   tags {
-    Name = "example_ec2_instance_no_changes_b"
+    Name = "example_ec2_instance_no_changes"
+    ExtraAttribute = "ThisIsAnExtraAttribute"
   }
 }

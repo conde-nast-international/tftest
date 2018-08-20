@@ -37,6 +37,7 @@
     },
     "destroy": false,
     "destroy_tainted": false,
+    "has_changes": true,
     "new": {
       "ami": "ami-f5bcb21e",
       "arn": "",

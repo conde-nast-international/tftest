@@ -20,6 +20,7 @@
     },
     "destroy": false,
     "destroy_tainted": false,
+    "has_changes": true,
     "new": {
       "arn": "",
       "assign_generated_ipv6_cidr_block": "false",
@@ -80,6 +81,7 @@
     },
     "destroy": false,
     "destroy_tainted": false,
+    "has_changes": true,
     "new": {
       "arn": "",
       "assign_generated_ipv6_cidr_block": "false",
