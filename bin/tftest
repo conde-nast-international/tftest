@@ -25,7 +25,13 @@ program.command('test')
              console.log('All tests completed successfully.');
              process.exit(0);
            } else {
-             console.error(`ERROR: Invalid number of tests executed: ${cliRun.numTestsRun} != ${cliRun.numTestsExpected}`);
+             if (cliRun.numTestsRun != cliRun.numTestsExpected) {
+               console.error(`ERROR: Invalid number of tests executed: ${cliRun.numTestsRun} != ${cliRun.numTestsExpected}`);
+             } else if(cliRun.numTestsFailed != 0) {
+               console.error(`ERROR: ${cliRun.numTestsFailed} tests failed.`);
+             } else {
+               console.error(`ERROR: Some unknown reason caused these tests to fail.`);
+             }
              process.exit(1);
            }
          });
