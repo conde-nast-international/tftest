@@ -56,8 +56,21 @@ program.command('show')
       .option('-p, --terraformPlan <terraformPlan>', 'Path of terraform modules plan <terraformPlan> (Default: ' + path.join(process.cwd(), 'output.plan') + ' )')
       .action((options) => {
         let tfPlan = options.terraformPlan ? options.terraformPlan : path.join(process.cwd(), 'output.plan');
-        let output = JSON.stringify(new Plan(tfPlan).plan, null, 2);
+        let parsedPlan = new Plan(tfPlan).plan;
+        let output = JSON.stringify(parsedPlan, null, 2);
         console.log(output);
+        return output;
+      });
+
+program.command('show-resources')
+      .description('show-resources')
+      .option('-p, --terraformPlan <terraformPlan>', 'Path of terraform modules plan <terraformPlan> (Default: ' + path.join(process.cwd(), 'output.plan') + ' )')
+      .action((options) => {
+        let tfPlan = options.terraformPlan ? options.terraformPlan : path.join(process.cwd(), 'output.plan');
+        let parsedPlan = new Plan(tfPlan).plan;
+        let resources = Object.keys(parsedPlan);
+        console.log('Resources: ');
+        console.log(`  - ${resources.join('\n  - ')}`)
         return output;
       });
 
