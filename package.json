@@ -1,6 +1,6 @@
 {
   "name": "@condenast/tftest",
-  "version": "3.2.4",
+  "version": "3.2.5",
   "description": "Terraform test framework",
   "main": "bin/tftest",
   "scripts": {
