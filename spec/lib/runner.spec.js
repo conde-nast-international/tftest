@@ -36,18 +36,6 @@ describe('the test runner', () => {
     specExpect(runner.plan.plan).toEqual(readFileSafeJsonParse(paths.jsonFile));
   });
 
-  it('should throw an error when jasmineConfigRunner isn\'t present in package.json', (done) => {
-    specSpyOn(libGeneric, 'readFileSafeJsonParse').and.returnValue({ 'invalid': 'package.json' });
-    try {
-      runner = new Runner(paths.folderPath, paths.binFile);
-      specExpect('jasmineConfigRunner missing didn\'t fail like it should do...').toEqual(true);
-      done();
-    } catch(e) {
-      specExpect(e).toEqual(new Error(`Jasmine config is not present.`));
-      done();
-    }
-  });
-
   it('should setup jasmine correctly', () => {
     specExpect(runner.plan.plan).toEqual(readFileSafeJsonParse(paths.jsonFile));
   });
