@@ -59,7 +59,6 @@ program.command('show')
         let parsedPlan = new Plan(tfPlan).plan;
         let output = JSON.stringify(parsedPlan, null, 2);
         console.log(output);
-        return output;
       });
 
 program.command('show-resources')
