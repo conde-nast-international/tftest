@@ -1,6 +1,6 @@
 {
   "name": "@condenast/tftest",
-  "version": "3.2.2",
+  "version": "3.2.3",
   "description": "Terraform test framework",
   "main": "bin/tftest",
   "scripts": {
@@ -30,7 +30,7 @@
   "binaryDependencies": {
     "tftest": "0.2.1"
   },
-  "jasmineConfigRunner":{
+  "jasmineConfigRunner": {
     "stopSpecOnExpectationFailure": false,
     "random": false,
     "colors": true,

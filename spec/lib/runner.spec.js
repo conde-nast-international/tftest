@@ -109,6 +109,15 @@ describe('the test runner', () => {
         done();
       });
     });
+    it('should report correctly when it doesn\'t find resources to test', (done) => {
+      const incorrectNamePaths = getFixturePaths('ec2_example_incorrect_resource_name', 'plan-no-changes');
+      const incorrectRunner = getRunner(incorrectNamePaths.folderPath, incorrectNamePaths.binFile);
+      incorrectRunner.execute((success) => {
+        specExpect(success).toEqual(false);
+        specExpect(incorrectRunner.testsNotFoundResources).toEqual(['aws_instance.ec2_incorrect']);
+        done();
+      });
+    });
   });
 
   it('should report correctly when it doesn\'t find resources to test', (done) => {

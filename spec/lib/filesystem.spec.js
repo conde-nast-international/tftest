@@ -18,11 +18,11 @@ describe('filesystem', () => {
       tests = tests.concat(require(vpcTestsInnerFile));
 
       let foundTests = discoverTests(vpcFixtureFolder);
-      expect(foundTests).toEqual(tests);
+      expect(foundTests).toEqual({tests: tests, missingTests: []});
     });
 
     it('should find the tests on the ec2_example', () => {
-      expect(discoverTests(ec2FixtureFolder)).toEqual(require(ec2TestsFile));
+      expect(discoverTests(ec2FixtureFolder)).toEqual({ tests: require(ec2TestsFile), missingTests: [] });
     });
   });
 });
