@@ -70,7 +70,6 @@ program.command('show-resources')
         let resources = Object.keys(parsedPlan);
         console.log('Resources: ');
         console.log(`  - ${resources.join('\n  - ')}`)
-        return output;
       });
 
 program.command('gettfjson')
