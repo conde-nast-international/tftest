@@ -29,12 +29,9 @@ jobs:
           name: Add deploy token to npmrc
           command: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
       - deploy:
-          name: Push package to npm
+          name: Push package to npm and delete npmrc
           command: |
             npm publish
-      - run:
-          name: Remove npmrc
-          command: |
             rm -rf ~/.npmrc
 
 workflows:
