@@ -24,7 +24,7 @@ infrastructure.
 - `'name'` - (string) Module to be exported from the `tests.js`
 - `'description'` - (string) Description of the tests which will be shown on jasmine stdout with (√) or (x).
 - `'changeWindow'` - (object: to, from) This is used for destroy and create. For a window of time the tests will be skipped. [Implementation Reference changeWindow]
-- `'count'` - (integer) The number of times to run the tests should be same with the terraform code. This should match the var.count parameter in module if it exists 
+- `'count'` - (integer) The number of times to run the tests should be same with the terraform code. This should match the var.count parameter in module if it exists
 - `'args'` - (object) Argument to be created in the `tests.js` this will be used in the tests function
 - `'tests'` - (array of functions) Tests to be run against the module this should have [expectations]
 
@@ -131,47 +131,19 @@ in order to write tests. By default we use `jasmine` [expectations].
 ```
 $ tftest -h
 
-  Usage: tftest [options] [command]
+Usage: tftest [options] [command]
 
   Options:
 
-    -V, --version   output the version number
-    -h, --help      output usage information
+    -V, --version             output the version number
+    -h, --help                output usage information
 
   Commands:
 
-    test [options]  test
-    show [options]  show
-    gettfjson       gettfjson
-
-```
-
-```
-$ tftest test -h
-
-  Usage: test [options]
-
-  test
-
-  Options:
-
-    -t, --terraformFolder <terraformFolder>  Path of terraform modules folder <terraformFolder> (Default: /home/user/infra)
-    -p, --terraformPlan <terraformPlan>      Path of terraform modules plan <terraformPlan> (Default: /home/user/infra/output.plan )
-    -h, --help                               output usage information
-
-```
-
-```
-tftest show -h
-
-  Usage: show [options]
-
-  show
-
-  Options:
-
-    -p, --terraformPlan <terraformPlan>  Path of terraform modules plan <terraformPlan> (Default: /home/user/infra/output.plan )
-    -h, --help                           output usage information
+    test [options]            test
+    show [options]            show
+    show-resources [options]  show-resources
+    gettfjson                 gettfjson
 
 ```
 

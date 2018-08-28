@@ -1,5 +1,4 @@
 const { show, cli, program } = require('../../bin/tftest');
-
 const getCommandsLookup = (program) => {
   let lookup = {};
   program.commands.forEach((command, offset) => {
