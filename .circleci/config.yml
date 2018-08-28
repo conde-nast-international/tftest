@@ -12,17 +12,14 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-              set +o pipefail
               npm install
       - run:
           name: Run tests
           command: |
-              set +o pipefail
               npm run test
       - run:
           name: Check lint
           command: |
-            set +o pipefail
             npm run lint
   publish:
     <<: *defaults
@@ -34,7 +31,6 @@ jobs:
       - deploy:
           name: Push package to npm
           command: |
-            set +o pipefail
             npm publish
 
 workflows:
