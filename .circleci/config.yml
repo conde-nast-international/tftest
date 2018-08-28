@@ -32,6 +32,10 @@ jobs:
           name: Push package to npm
           command: |
             npm publish
+      - run:
+          name: Remove npmrc
+          command: |
+            rm -rf ~/.npmrc
 
 workflows:
   version: 2
